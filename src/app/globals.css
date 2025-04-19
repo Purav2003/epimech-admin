@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body{
+    font-family: "DM Sans", sans-serif;
+}
+
+.nav-header{
+  font-family: 'Barlow Condensed', sans-serif !important;
+  letter-spacing: 2.9px;
+}
+
+.about-title,.mission-title,.title{
+  font-family: 'Barlow Condensed', sans-serif !important;
+}
+
+.contact-headers h3,.contact-headers label{
+  font-weight: 700;
+}
+::-webkit-scrollbar {
+    width: 7px;
+    height: 5px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px #eee;
+    border-radius: 6px;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #212937;
+    border-radius: 2px;
+  }
+
+  .navbar-title,.footer-title{
+    font-family: "Ponomar", system-ui;
+    font-size: 1.5rem;
+  }
+
+  .button {
+      background:transparent;
+      padding:0.5rem 0.5rem;
+      margin:0 0.5rem;
+      font-size:1rem;
+
+      border-top-left-radius: 255px 15px;
+      border-top-right-radius: 15px 225px;
+      border-bottom-right-radius: 225px 15px;
+      border-bottom-left-radius:15px 255px;
+}
+
+.button.lined.thick{
+   border:solid 3px #41403E;
+}
+.button.dotted.thick{
+   border:dotted 3px #41403E;
+}
+.button.dashed.thick{
+  border:dashed 3px #41403E;
+}
+.button.lined.thin{
+   border:solid 2px #41403E;
+}
+.button.dotted.thin{
+   border:dotted 2px #41403E;
+}
+.button.dashed.thin{
+  border:dashed 2px #41403E;
+}
+
