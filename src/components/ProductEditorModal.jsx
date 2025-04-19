@@ -36,7 +36,7 @@ export default function ProductEditorModal({ open, onClose, product, onSave, cat
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50">
-      <div className="bg-white dark:bg-color-gray-900 p-6 rounded-md w-[90%] max-w-xl shadow-lg">
+      <div className="bg-white dark:bg-color-gray-900 p-6 rounded-md w-[90%] max-w-xl shadow-lg dark:text-white">
         <h2 className="text-xl font-semibold mb-4">Edit Product</h2>
 
         <label className="block mb-2 font-medium">Part Name</label>
@@ -44,7 +44,7 @@ export default function ProductEditorModal({ open, onClose, product, onSave, cat
           name="part_name"
           value={form.part_name || ''}
           onChange={handleChange}
-          className="w-full mb-4 px-3 py-2 border rounded"
+          className="w-full mb-4 px-3 py-2 border rounded dark:text-black"
         />
 
         <label className="block mb-2 font-medium">Image URL</label>
@@ -52,7 +52,7 @@ export default function ProductEditorModal({ open, onClose, product, onSave, cat
           name="image"
           value={form.image || ''}
           onChange={handleChange}
-          className="w-full mb-4 px-3 py-2 border rounded"
+          className="w-full mb-4 px-3 py-2 border rounded dark:text-black"
         />
 
         <label className="block mb-2 font-medium">Part Numbers</label>
@@ -63,13 +63,13 @@ export default function ProductEditorModal({ open, onClose, product, onSave, cat
               name={`part_number.${key}`}
               value={val}
               onChange={handleChange}
-              className="w-full px-3 py-2 border rounded"
+              className="w-full px-3 py-2 border rounded dark:text-black"
             />
           </div>
         ))}
 
         <div className="flex justify-end mt-6 gap-4">
-          <button onClick={onClose} className="px-4 py-2 bg-gray-300 rounded">Cancel</button>
+          <button onClick={onClose} className="px-4 py-2 bg-gray-300 rounded dark:text-black">Cancel</button>
           <button onClick={handleSubmit} className="px-4 py-2 bg-blue-600 text-white rounded">Save</button>
         </div>
       </div>
