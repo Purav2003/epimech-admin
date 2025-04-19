@@ -1,6 +1,14 @@
 'use client';
 import { useEffect, useState } from 'react';
-import { DndContext, closestCenter, DragOverlay } from '@dnd-kit/core';
+import {
+  DndContext,
+  closestCenter,
+  PointerSensor,
+  TouchSensor,
+  useSensor,
+  useSensors
+} from '@dnd-kit/core';
+import { DragOverlay } from '@dnd-kit/core';
 import { 
   SortableContext, 
   verticalListSortingStrategy, 
@@ -64,7 +72,16 @@ export default function DragDropList({ items, category, handleRefresh }) {
   };
 
   const activeItem = activeId ? currentItems.find(item => item._id === activeId) : null;
-
+  const sensors = useSensors(
+    useSensor(PointerSensor),
+    useSensor(TouchSensor, {
+      activationConstraint: {
+        delay: 150,        // Long press
+        tolerance: 5       // Movement tolerance
+      }
+    })
+  );
+  
   return (
     <div className="relative">
       {/* Status message */}
@@ -104,6 +121,8 @@ export default function DragDropList({ items, category, handleRefresh }) {
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd} 
           modifiers={[restrictToVerticalAxis]}
+          sensors={sensors} // ✅ added
+
         >
           <SortableContext
             items={currentItems.map((i) => i._id)}
