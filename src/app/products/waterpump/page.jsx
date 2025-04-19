@@ -41,7 +41,7 @@ export default function WaterPumpPage() {
   };
 
   return (
-    <div className="max-w-6xl mx-auto px-4 pt-8">
+    <div className="max-w-6xl mx-auto px-4 pt-8 min-h-screen">
       <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-6">
         <div className="flex items-center mb-4 md:mb-0">
           <Package2 size={28} className="text-blue-600 dark:text-blue-400 mr-3" />
