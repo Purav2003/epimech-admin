@@ -2,11 +2,13 @@
 import { Pencil, Trash2, Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 import ProductEditorModal from '@/components/ProductEditorModal';
+import Image from 'next/image';
 
 export default function ProductCard({ item, category, isOverlay = false }) {
   const [editing, setEditing] = useState(null);
   const [isDeleting, setIsDeleting] = useState(null);
   const [local, setLocal] = useState(item);
+  const [image, setImage] = useState(item.image || '/fallback.png');
 
   const handleSave = (updated) => {
     setLocal(updated);
@@ -42,16 +44,22 @@ export default function ProductCard({ item, category, isOverlay = false }) {
     }
   };
 
+  const handleError = (e) => {
+
+    setImage('/fallback.png'); // update state to trigger re-render
+  }
+    
+
   return (
     <>
       <div className={`bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl p-4 shadow-sm ${isOverlay ? 'opacity-80' : ''}`}>
         {/* Image */}
-        <div className="w-full h-40 bg-gray-100 dark:bg-gray-800 rounded mb-4 overflow-hidden flex items-center justify-center">
+        <div className="w-full h-60 bg-gray-100 dark:bg-white rounded mb-4 overflow-hidden flex items-center justify-center">
           {local.image ? (
-            <img src={local.image} alt={local.part_name} className="w-full h-full object-cover" />
+            <img src={image} alt={local.part_name} className="w-full h-full object-contain" onError={handleError}/>
           ) : (
-            <span className="text-gray-400 dark:text-gray-500 text-sm">No image</span>
-          )}
+            <img src={'/fallback.png'} alt="Fallback" className="w-full h-full object-contain" />
+)}
         </div>
 
         {/* Info */}

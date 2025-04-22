@@ -13,7 +13,6 @@ export async function GET(req) {
       { 'part_number.EMD 710 / EMD 645': { $regex: search, $options: 'i' } },
     ]
   }).sort({ rank: 1 });
-  console.log('Results:', results); // Debugging line
   if (results.length === 0) {
     return Response.json({ message: 'No results found' }, { status: 404 });
   }

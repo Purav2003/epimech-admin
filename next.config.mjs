@@ -11,6 +11,9 @@ const baseConfig = {
       },
     ],
   },
+  experimental: {
+    appDir: true, // 👈 REQUIRED to use /src/app properly
+  },
 };
 
 const pwaConfig = {

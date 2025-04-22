@@ -1,8 +1,9 @@
 'use client';
-import { Moon, Sun } from 'lucide-react';
+import { LogOut, Moon, Sun } from 'lucide-react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 const tabs = [
   { label: 'Mail', href: '/mail' },
@@ -12,8 +13,40 @@ const tabs = [
 
 export default function AdminNavbar() {
   const pathname = usePathname();
+  const router = useRouter();
   const [theme, setTheme] = useState('dark');
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLoggingOut, setIsLoggingOut] = useState(false);
+
+  const handleLogout = async () => {
+    try {
+      setIsLoggingOut(true);
+      
+      // Call logout API endpoint to invalidate the token server-side
+      await fetch('/api/logout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      });
+      
+      // Remove cookies
+      Cookies.remove('token');
+      Cookies.remove('otp');
+      
+      // Clear any auth-related local storage items if you have any
+      localStorage.removeItem('user');
+      
+      // Redirect to login page
+      router.push('/login');
+    } catch (error) {
+      console.error('Logout failed:', error);
+      // If API call fails, still try to clear cookies and redirect
+      Cookies.remove('token');
+      Cookies.remove('otp');
+      window.location.href = '/login';
+    } finally {
+      setIsLoggingOut(false);
+    }
+  };
 
   const handleToggleTheme = () => {
     const newTheme = theme === 'light' ? 'dark' : 'light';
@@ -67,6 +100,18 @@ export default function AdminNavbar() {
                 <Moon size={20} /> : 
                 <Sun size={20} />
               }
+            </button>
+            <button
+              onClick={handleLogout}
+              disabled={isLoggingOut}
+              className="p-2 rounded-full hover:bg-blue-500 dark:hover:bg-gray-700 transition-colors flex items-center"
+              aria-label="Logout"
+            >
+              {isLoggingOut ? (
+                <div className="animate-spin h-5 w-5 border-2 border-white border-t-transparent rounded-full mr-1"></div>
+              ) : (
+                <LogOut size={20} />
+              )}
             </button>
             
             {/* Mobile menu button */}
