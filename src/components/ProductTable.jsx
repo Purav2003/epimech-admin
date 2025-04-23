@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Trash2, Pencil, EyeOff, Eye, GripVertical } from 'lucide-react';
 import SortableRow from './SortableRow';
 import ProductEditorModal from '@/components/ProductEditorModal';
+import Link from 'next/link';
 
 export default function ProductTable({ items, category }) {
   const [products, setProducts] = useState(items);
@@ -81,31 +82,29 @@ export default function ProductTable({ items, category }) {
               <div className="mt-4 flex justify-between items-center text-xs">
                 <button
                   onClick={() => handleToggleHide(item)}
-                  className={`inline-flex items-center gap-1 px-2 py-1 rounded-full transition-colors ${
-                    item.is_hide
+                  className={`inline-flex items-center gap-1 px-2 py-1 rounded-full transition-colors ${item.is_hide
                       ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400'
                       : 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400'
-                  }`}
+                    }`}
                 >
                   {item.is_hide ? <EyeOff size={14} /> : <Eye size={14} />}
                   {item.is_hide ? 'Hidden' : 'Visible'}
                 </button>
 
                 <div className="flex gap-2">
-                  <button
-                    onClick={() => setEditing(item)}
+                  <Link
+                    href={`/products/${item._id}/edit`}
                     className="px-2 py-1 bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-400 rounded hover:bg-amber-200 dark:hover:bg-amber-900/50"
                   >
                     <Pencil size={14} />
-                  </button>
+                  </Link>
                   <button
                     onClick={() => handleDelete(item._id)}
                     disabled={isDeleting === item._id}
-                    className={`px-2 py-1 rounded ${
-                      isDeleting === item._id
+                    className={`px-2 py-1 rounded ${isDeleting === item._id
                         ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
                         : 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400 hover:bg-red-200'
-                    }`}
+                      }`}
                   >
                     <Trash2 size={14} />
                   </button>

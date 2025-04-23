@@ -6,6 +6,7 @@ const PartSchema = new mongoose.Schema({
   rank: Number,
   part_name: String,
   part_number: Object,
+  subimages: Object,
 });
 
 export default mongoose.models.WaterPump || mongoose.model('WaterPump', PartSchema);

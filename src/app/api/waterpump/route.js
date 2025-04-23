@@ -25,3 +25,5 @@ export async function POST(req) {
   const part = await WaterPump.create(body);
   return Response.json(part);
 }
+
+

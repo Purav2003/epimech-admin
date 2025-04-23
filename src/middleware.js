@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { jwtVerify } from 'jose'; // You'll need to add jose to your dependencies
+import { jwtVerify } from 'jose';
 
 export async function middleware(request) {
   // Get the pathname
@@ -7,19 +7,14 @@ export async function middleware(request) {
   
   // List of public routes that don't require auth
   const publicPaths = [
-    '/login', 
-    '/api/signup', 
-    '/api/login', 
-    '/api/verify-otp', 
-    '/api/logout',
-    '/api/send-email',
-    // Add other public paths here
+    '/login',
+    '/api/login',
+    '/api/signup',
+    '/api/verify-otp',
   ];
 
   // Check if the requested path is public
-  const isPublicPath = publicPaths.some(publicPath => 
-    path === publicPath || path.startsWith(`${publicPath}/`)
-  );
+  const isPublicPath = publicPaths.includes(path);
 
   // Get token from cookies
   const token = request.cookies.get('token')?.value;
@@ -35,8 +30,7 @@ export async function middleware(request) {
   }
 
   try {
-    // Verify JWT token (optional but recommended for security)
-    // This requires the 'jose' package: npm install jose
+    // Verify JWT token
     if (process.env.JWT_SECRET) {
       const secret = new TextEncoder().encode(process.env.JWT_SECRET);
       
