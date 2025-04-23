@@ -117,7 +117,7 @@ export default function RedesignedAdminNavbar() {
           <div className="flex justify-between items-center h-16">
             {/* Logo and brand */}
             <div className="flex items-center">
-              <Link href="/dashboard" className="flex items-center">
+              <Link href="/mail" className="flex items-center">
                 <div className="bg-blue-600 dark:bg-blue-500 w-8 h-8 rounded flex items-center justify-center mr-2">
                   <span className="text-white font-bold">E</span>
                 </div>
