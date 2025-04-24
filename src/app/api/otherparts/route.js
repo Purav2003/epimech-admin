@@ -7,7 +7,6 @@ export async function GET(req) {
   const search = searchParams.get('search') || '';
 
   const results = await OtherParts.find({
-    is_hide: false,
     $or: [
       { part_name: { $regex: search, $options: 'i' } },
       { 'part_number.EMD 710 / EMD 645': { $regex: search, $options: 'i' } },
