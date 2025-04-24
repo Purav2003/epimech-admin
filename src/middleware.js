@@ -11,6 +11,7 @@ export async function middleware(request) {
     '/api/login',
     '/api/signup',
     '/api/verify-otp',
+    '/api/profile'
   ];
 
   // Check if the requested path is public

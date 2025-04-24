@@ -331,7 +331,7 @@ export default function ProductEditorModal({ open, onClose, product, onSave, cat
           exit="hidden"
         >
           <motion.div
-            className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-5xl max-h-[90vh] flex flex-col"
+            className="bg-white dark:bg-gray-900 rounded-2xl shadow-2xl w-full max-w-5xl max-h-[85vh] mt-12 flex flex-col"
             variants={modalVariants}
             initial="hidden"
             animate="visible"

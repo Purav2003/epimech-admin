@@ -47,7 +47,7 @@ export default function OtherPartsPage() {
   ];
   return (
     <div className="max-w-6xl mx-auto px-4 min-h-screen">
-   <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+   {/* <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
         <div className="absolute top-20 right-10 w-64 h-64 bg-blue-400/5 dark:bg-blue-400/10 rounded-full blur-3xl"></div>
         <div className="absolute top-40 left-20 w-96 h-96 bg-cyan-400/5 dark:bg-cyan-500/10 rounded-full blur-3xl"></div>
         <div className="absolute -bottom-20 right-0 w-80 h-80 bg-blue-300/5 dark:bg-blue-300/10 rounded-full blur-3xl"></div>
@@ -59,7 +59,7 @@ export default function OtherPartsPage() {
         <svg className="absolute top-40 right-0 text-cyan-100 dark:text-cyan-900/30 opacity-20 rotate-45" width="200" height="200" viewBox="0 0 100 100">
           <path d="M50,5 C55,25 80,40 50,95 C20,40 45,25 50,5 Z" fill="currentColor" />
         </svg>
-      </div>
+      </div> */}
 
       <div className="max-w-6xl mx-auto px-4 pt-12 relative z-10">
         {/* Hero section */}

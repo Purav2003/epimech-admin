@@ -1,52 +1,54 @@
 import { NextResponse } from 'next/server';
 import jwt from 'jsonwebtoken';
-import { UserModel } from '@/models/User'; // Import your User model
+import { UserModel } from '@/models/User';
 import mongoose from 'mongoose';
+
 export async function POST(req) {
   try {
-        // Connect to MongoDB
-        if (mongoose.connection.readyState === 0) {
-          await mongoose.connect(process.env.MONGODB_URI, {
-            useNewUrlParser: true,
-            useUnifiedTopology: true,
-          });
-        }
-    
-    const { username, otp } = await req.json();
-
-    // Find user with matching username and OTP
-    const user = await UserModel.findOne({ username, tempOTP: otp });
-
-    if (user) {
-      // Clear OTP after successful verification
-      user.tempOTP = undefined;
-      await user.save();
-
-      // Create JWT
-      const token = jwt.sign(
-        { 
-          userId: user._id,
-          username: user.username
-        },
-        process.env.JWT_SECRET,
-        { expiresIn: '1h' }
-      );
-
-      const response = NextResponse.json({ success: true });
-
-      // Set token in HTTP-only cookie
-      response.cookies.set('token', token, {
-        httpOnly: true,
-        path: '/',
-        maxAge: 60 * 60, // 1 hour
-        secure: process.env.NODE_ENV === 'production',
-        sameSite: 'strict'
+    if (mongoose.connection.readyState === 0) {
+      await mongoose.connect(process.env.MONGODB_URI, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
       });
-
-      return response;
     }
 
-    return NextResponse.json({ success: false, message: 'Invalid OTP' }, { status: 401 });
+    const { username, otp } = await req.json();
+    const user = await UserModel.findOne({ username, tempOTP: otp });
+
+    if (!user) {
+      return NextResponse.json({ success: false, message: 'Invalid OTP' }, { status: 401 });
+    }
+
+    // Clear OTP
+    user.tempOTP = undefined;
+    await user.save();
+
+    // Create JWT token
+    const token = jwt.sign(
+      { userId: user._id, username: user.username },
+      process.env.JWT_SECRET,
+      { expiresIn: '1y' }
+    );
+
+    // Create a response and set the cookie properly
+    const response = new NextResponse(JSON.stringify({ success: true,token:token }), {
+      status: 200,
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+
+    response.cookies.set({
+      name: 'token',
+      value: token,
+      httpOnly: true,
+      path: '/',
+      maxAge: 60 * 60, // 1 hour
+      sameSite: 'strict',
+      secure: process.env.NODE_ENV === 'production',
+    });
+
+    return response;
   } catch (error) {
     console.error('OTP verification error:', error);
     return NextResponse.json({ success: false, message: 'Server error' }, { status: 500 });

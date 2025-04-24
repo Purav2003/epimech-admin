@@ -30,7 +30,7 @@ export async function POST(req) {
 
       // Send OTP via email
       await sendEmail({
-        to: process.env.QUOTATION_RECIPIENT_EMAIL || user.email, // fallback to env or user's email
+        to: user.email, // fallback to env or user's email
         subject: 'Your OTP Code',
         text: `Your login OTP is: ${otp}`,
       });

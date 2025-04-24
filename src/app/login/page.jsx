@@ -19,6 +19,10 @@ export default function LoginPage() {
   };
 
   const handleLogin = async () => {
+    if (!form.username || !form.password) {
+      setMessage('Please fill in all fields.');
+      return;
+    }
     try {
       setIsLoading(true);
       const res = await fetch('/api/login', {
@@ -55,7 +59,10 @@ export default function LoginPage() {
 
       const data = await res.json();
       if (data.success) {
-        router.push('/');
+        localStorage.setItem('token', JSON.stringify(data.token));
+        console.log('Token:', JSON.stringify(data.token));
+       
+        router.push('/mail');
       } else {
         setMessage(data.message || 'Invalid OTP. Please try again.');
       }
