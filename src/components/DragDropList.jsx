@@ -17,6 +17,7 @@ import {
 import { restrictToVerticalAxis } from '@dnd-kit/modifiers';
 import SortableRow from './SortableRow'; // this is now a card wrapper
 import ProductCard from './ProductCard'; // we'll move product UI here for cleanliness
+import toast from 'react-hot-toast';
 
 export default function DragDropList({ items, category, handleRefresh }) {
   const [currentItems, setCurrentItems] = useState([]);
@@ -57,9 +58,16 @@ export default function DragDropList({ items, category, handleRefresh }) {
 
       if (response.ok) {
         setStatusMessage('Order saved successfully');
-        handleRefresh();
+        window.location.reload(); // reload the page to reflect changes
+        const timeout = setTimeout(() => {
+          toast.success('Order saved successfully!');
+        },2000);
+        return () => clearTimeout(timeout);
+        // handleRefresh();
       } else throw new Error();
     } catch (error) {
+      toast.error('Failed to save order. Please try again.');
+      console.error('Error saving order:', error);
       setStatusMessage('Failed to save order. Please try again.');
     } finally {
       setIsLoading(false);
