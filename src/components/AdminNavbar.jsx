@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import Cookies from 'js-cookie';
-import { LogOut, Moon, Sun, Menu, X, Bell, User, Settings, Home, Mail, Droplet, Package } from 'lucide-react';
+import { LogOut, Moon, Sun, Menu, X, Bell, User, Settings, Home, Mail, Droplet, Package, Cloud } from 'lucide-react';
 
 export default function RedesignedAdminNavbar() {
   const pathname = usePathname();
@@ -25,6 +25,7 @@ export default function RedesignedAdminNavbar() {
     { label: 'Mail', href: '/mail', icon: <Mail size={18} /> },
     { label: 'Water Pump', href: '/products/waterpump', icon: <Droplet size={18} /> },
     { label: 'Other Parts', href: '/products/otherparts', icon: <Package size={18} /> },
+    { label: 'AWS', href: '/aws', icon: <Cloud size={18} /> },
   ];
 
   const handleLogout = async () => {

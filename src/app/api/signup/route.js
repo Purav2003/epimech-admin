@@ -1,40 +1,52 @@
 import { NextResponse } from 'next/server';
-import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
-import User from '@/models/User';
+import { UserModel } from '@/models/User';
+import dbConnect from '@/lib/dbConnect'; // Use this instead of direct mongoose.connect if available
 
 export async function POST(req) {
   try {
-    const { username, password } = await req.json();
+    const { username, email, password } = await req.json();
 
-    if (!username || !password) {
-      return NextResponse.json({ success: false, message: 'Username and password are required' }, { status: 400 });
+    // Basic validation
+    if (!username || !email || !password) {
+      return NextResponse.json(
+        { success: false, message: 'Username, email, and password are required' },
+        { status: 400 }
+      );
     }
 
-    // Connect to MongoDB
-    if (mongoose.connection.readyState === 0) {
-      await mongoose.connect(process.env.MONGODB_URI, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-      });
-    }
+    await dbConnect();
 
-    // Check for existing user
-    const existingUser = await UserModel.findOne({ username });
+    // Check for existing username or email
+    const existingUser = await UserModel.findOne({
+      $or: [{ username }, { email }],
+    });
+
     if (existingUser) {
-      return NextResponse.json({ success: false, message: 'User already exists' }, { status: 409 });
+      return NextResponse.json(
+        { success: false, message: 'Username or email already exists' },
+        { status: 409 }
+      );
     }
 
     // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Save new user
-    const newUser = new UserModel({ username, password: hashedPassword });
+    // Create new user
+    const newUser = new UserModel({
+      username,
+      email,
+      password: hashedPassword,
+    });
+
     await newUser.save();
 
-    return NextResponse.json({ success: true, message: 'User created successfully' });
+    return NextResponse.json({ success: true, message: 'User created successfully' }, { status: 201 });
   } catch (error) {
     console.error('Signup error:', error);
-    return NextResponse.json({ success: false, message: 'Internal Server Error' }, { status: 500 });
+    return NextResponse.json(
+      { success: false, message: 'Internal Server Error' },
+      { status: 500 }
+    );
   }
 }
