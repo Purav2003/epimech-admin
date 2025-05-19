@@ -101,7 +101,7 @@ export default function Gallery() {
 
 
   return (
-    <div className={`min-h-screen transition-colors duration-300 ${darkMode ? 'dark:bg-gray-900 dark:text-white' : 'bg-gray-50 text-gray-900'}`}>
+    <div className={`min-h-screen transition-colors duration-300 dark:bg-gray-900 dark:text-white bg-gray-50 text-gray-900}`}>
       <div className="container mx-auto px-4 py-8">
         {/* Header with title and dark mode toggle */}
         <div className="flex justify-between items-center mb-8">
