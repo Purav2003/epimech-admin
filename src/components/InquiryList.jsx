@@ -40,10 +40,17 @@ export default function InquiryList({ inquiries }) {
               </div>
             </div>
           )}
-          
-          <div>
+
+          {inq.type === 'CONTACT-US' && (
+            <div className="mb-4">
+              <p className="text-xs text-gray-500 dark:text-gray-400">Phone Number</p>
+              <p className="text-sm text-blue-600 dark:text-blue-400">{inq.phone}</p>
+            </div>
+          )}
+
+            <div className="mb-4 p-3 bg-gray-50 rounded-md dark:bg-gray-700">
             <p className="text-xs text-gray-500 dark:text-gray-400 mb-1">Message</p>
-            <p className="text-gray-700 dark:text-gray-300 whitespace-pre-line">{inq.message || inq.comment}</p>
+            <p className="font-medium dark:text-gray-200 whitespace-pre-line">{inq.message || inq.comment}</p>
           </div>
         </div>
       ))}
