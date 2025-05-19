@@ -31,7 +31,7 @@ export default function InquiryList({ inquiries }) {
                 </div>
                 <div>
                   <p className="text-xs text-gray-500 dark:text-gray-400">Part #</p>
-                  <p className="font-mono dark:text-gray-200">{inq.part_number}</p>
+                  <p className="font-mono dark:text-gray-200">{inq.comment}</p>
                 </div>
                 <div>
                   <p className="text-xs text-gray-500 dark:text-gray-400">Quantity</p>
