@@ -8,28 +8,7 @@ export default function Gallery() {
   const [loading, setLoading] = useState(false);
   const [deleteConfirmation, setDeleteConfirmation] = useState(null);
   const [isDeleting, setIsDeleting] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
   const [selectedImage, setSelectedImage] = useState(null);
-
-  // Initialize dark mode from localStorage or system preference
-  useEffect(() => {
-    const savedMode = localStorage.getItem('darkMode');
-    if (savedMode !== null) {
-      setDarkMode(savedMode === 'true');
-    } else {
-      setDarkMode(window.matchMedia('(prefers-color-scheme: dark)').matches);
-    }
-  }, []);
-
-  // Apply dark mode class to document
-  useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-    localStorage.setItem('darkMode', darkMode.toString());
-  }, [darkMode]);
 
   useEffect(() => {
     fetchImages();
